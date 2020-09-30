@@ -1,0 +1,157 @@
+import java.io.*;
+import java.util.*;
+class game
+{
+    public static void main(String args[])throws IOException
+    {
+        System.out.println("\f");
+        int n=9;
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Player 1: \nEnter the name of movie in small letters");
+        String s=sc.nextLine();
+        int l=s.length();
+        String s1="";
+        System.out.println("\f");
+        System.out.println("\nNow hand over the system to player 2");
+        System.out.println("\nPlayer 2 will get 9 attempts to correcty guess the name of movie and if he/she succeeds,wins the game\n");
+        
+        
+        char a[]=new char[100];
+        int k=0;
+        for(int i=0;i<l;++i)
+        {
+            char c=s.charAt(i);
+            if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u')
+            {
+                System.out.print(c);
+                a[k]=c;
+                ++k;
+            }
+            else if(Character.isLetter(c))
+            {
+               System.out.print("_");
+               c='_';
+            }
+            else if(c==' ')
+            System.out.print("  ");
+            else
+            System.out.print(c);
+            s1=s1+c;
+        }
+        System.out.println("\n\nThe game begins now.\nOnly vowels in movie's name will be displayed\nYou'll get 9 attempts for guessing the alphabets and thereby the name of the movie.\nWrong attempts will lead into decreasing the number of attempts left but right guess will lead into number of attempts remaining unchanged.\n");
+        
+        int d=0;
+        for(int i=0;i<n;++i)
+        {
+            int p=0,l1=0;
+            System.out.println("Enter your choice no "+(d+1));
+            char c=sc.next().charAt(0);
+            if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u')
+            {
+                System.out.println("Useless attempt.Enter letters except vowels");
+                --i;
+                ++d;
+                continue;
+            }
+            for(int j=0;j<k;++j)
+            {
+                if(c==a[j])
+                {
+                    System.out.println("Not again!");
+                    --i;
+                    p=1;
+                    break;
+                }
+            }
+            if(p!=1)
+            {
+                a[k]=c;
+                ++k;
+                for(int j=0;j<l;++j)
+                {
+                    
+                    if(c==s.charAt(j))
+                    {
+                        p=1;
+                        s1=s1.substring(0,j)+c+s1.substring(j+1,l);
+                       
+                    }
+                    
+                    
+                }
+                if(p!=1)
+                System.out.println("Wrong guess!!");
+                else
+                {
+                    System.out.println(s1);--i;
+                }
+            }
+            for(int j=0;j<l;++j)
+            {
+                if(s1.charAt(j)!='_')
+                ++l1;
+            }
+            if(l1==l)
+            {
+                System.out.println("Winner Winner Chicken Dinner!!!");
+                File fi=new File("bollywood1.data");
+                FileWriter fw=new FileWriter(fi , true);
+                
+                BufferedWriter bw=new BufferedWriter(fw);
+                PrintWriter pw=new PrintWriter(bw);
+                BufferedReader obj=new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Please enter your name");
+                String s3=obj.readLine();
+                
+                pw.println(s3+"\t\t         "+(n-i-1));
+                pw.close();
+                bw.close();
+                fw.close();
+                break;
+            }
+            else if(l1!=l && i==(n-1))
+            {
+                System.out.println("Sorry but you lost!Better luck next time");
+                File fi=new File("bollywood1.data");
+                FileWriter fw=new FileWriter(fi , true);
+                
+                BufferedWriter bw=new BufferedWriter(fw);
+                PrintWriter pw=new PrintWriter(bw);
+                BufferedReader obj=new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Please enter your name");
+                String s3=obj.readLine();
+                
+                pw.println(s3+"\t\t         "+(n-i-1));
+                pw.close();
+                bw.close();
+                fw.close();
+                break;
+              
+            }
+            ++d;
+            System.out.println("You have "+(n-i-1)+" lives remaining\n");
+        }
+        
+        
+        System.out.println("\f");
+        System.out.println("Player name\tNo of lives left\n");
+        
+        
+        FileReader fr=new FileReader("bollywood1.data");
+        
+        BufferedReader bfr=new BufferedReader(fr);
+        for(int i=0;i<100;++i)
+        {
+            String s3=bfr.readLine();
+            if(s3==null)
+            break;
+            System.out.println(s3);
+        }
+  
+        
+        bfr.close();
+        fr.close();
+        
+        
+    }
+}
