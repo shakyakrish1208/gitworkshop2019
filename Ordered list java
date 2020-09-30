@@ -1,0 +1,80 @@
+class OrderedList implements List;
+{
+	Integer buffer, size;
+	Object arr[];
+	OrderedList()
+	{
+		buffer=5;
+		size=0;
+		arr=new Object[buffer];
+	}
+
+	public void add(Object m)
+	{
+		Integer pos=-1;
+		for (Integer i=0; i<size; i++)
+		{
+			if((Integer)m<(Integer)arr[i])
+			{
+				pos=i;
+				break;
+			}
+		}
+		if(pos!=-1)
+		{
+			for(Integer i=size; i>pos; i--)
+			arr[i]=arr[i-1];
+			
+			arr[pos]=m;
+			
+		}
+		else
+		arr[size]=m;
+		size++;
+		if(size==buffer)
+		{
+			Object arr2[];
+			arr2=new Object[buffer*2];
+			buffer*=2;
+			for(Integer i=0; i<size; i++)
+			arr2[i]=arr[i];
+			arr=arr2;
+		}
+	}
+
+	public void traverse()
+	{
+		for(Integer i=0;i<size;i++)
+		{
+			System.out.print(arr[i]+ " ");
+		}
+		System.out.println();
+	}
+
+	public void remove(Object m)
+	{
+		Integer pos=search(m);
+		for(Integer i=pos;i<size;i++)
+		{
+			arr[i]=arr[i+1];
+		}
+		size--;
+	}
+
+	public Integer search(Object m)
+	{
+		Integer hi,lo,mid;
+		while(hi>lo)
+		{
+			mid=(hi+lo)/2;
+			if((Integer)m==(Integer)arr[mid])
+			return i;
+			else if((Integer)m>(Integer)arr[mid])
+			lo=mid;
+			else if((Integer)m<(Integer)arr[mid])
+			hi=mid;
+		}
+		System.out.println("element not found");
+		return -1;
+	}	
+}
