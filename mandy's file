@@ -1,0 +1,7 @@
+ye Manas Shukla ki file h
+#include<iostream>
+using namespace std;
+int main(){
+  cout<<"Hello Devansh";
+  return 0;
+}
